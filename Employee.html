@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Management System</title>
+    <style>
+       .formdiv
+       {
+        align:"center";
+        background-color: antiquewhite;
+        border:1px solid balck;
+       }
+    </style>
+</head>
+<body>
+    <div class="formdiv">
+    <h1 align="center">Loan Management System</h1>
+    <hr color="blue" size="5" width="30%" align="center">
+    <form id="loanForm" >
+        <div style="padding-left: 40%;">
+        <label for="employeeID">Employee ID:</label>
+        <input type="text" id="employeeID" onchange="checkempid()" required><br><br>
+
+        <label for="employeeName">Name:</label>
+        <input type="text" id="employeeName" required><br><br>
+
+        <label for="employeeAddress">Address:</label>
+        <input type="text" id="employeeAddress" required><br><br>
+
+        <label for="employeeDesignation">Designation:</label>
+        <input type="text" id="employeeDesignation" required><br><br>
+
+        <label for="loanAmount">Loan Amount:</label>
+        <input type="number" id="loanAmount" required><br><br>
+
+        <label for="loanDate">Date of Loan Taken:</label>
+        <input type="date" id="loanDate" required><br><br>
+
+        <label for="interestRate">Interest Rate:</label>
+        <input type="number" id="interestRate" required><br><br>
+
+        <label for="maturityDate">Maturity Date:</label>
+        <input type="date" id="maturityDate" required><br><br>
+
+        <button type="button" onclick="calculateLoan()">Calculate Loan</button>
+        </div>
+    </form>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        function checkempid()
+        {
+            var empid=document.getElementById("employeeID").value;
+           if(empid.charAt(0)!="E" || empid.length>4)
+            {
+               console.log("yugh");
+                    alert("Please enter valid pattern");
+                document.getElementById("employeeID").value="";
+                
+               
+            }
+           
+            
+        }
+        function calculateLoan() {
+            // Get input values
+            const employeeID = document.getElementById('employeeID').value;
+            const designation = document.getElementById('employeeDesignation').value;
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+
+            // Check designation and calculate interest based on it
+            let interest = 0;
+            if (designation.toLowerCase() === 'manager') {
+                interest = loanAmount * 0.1; // 10% interest for managers
+            } else {
+                interest = loanAmount * 0.05; // 5% interest for other designations
+            }
+
+            // Calculate total loan amount payable
+            const totalAmountPayable = loanAmount + interest;
+
+            // Display result
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<p>Employee ID: ${employeeID}</p>
+                                    <p>Designation: ${designation}</p>
+                                    <p>Loan Amount: $${loanAmount.toFixed(2)}</p>
+                                    <p>Interest: $${interest.toFixed(2)}</p>
+                                    <p>Total Amount Payable: $${totalAmountPayable.toFixed(2)}</p>`;
+        }
+    </script>
+</body>
+</html>
